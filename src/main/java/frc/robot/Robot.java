@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
   public void teleopExit() {
     solenoidCTRE.set(false);
     solenoidRev.set(false);
+    SmartDashboard.putBoolean("Rev Solenoid", solenoidRev.get());
+
   }
 
 }
