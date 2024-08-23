@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
     solenoidCTRE.set(false);
     solenoidRev.set(false);
     SmartDashboard.putBoolean("Rev Solenoid", solenoidRev.get());
-
   }
 
 }
