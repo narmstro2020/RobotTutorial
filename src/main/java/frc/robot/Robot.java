@@ -4,56 +4,45 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
-  @Override
-  public void robotInit() {
-  }
+  private final Solenoid solenoidRev = new Solenoid(PneumaticsModuleType.REVPH, 0);
+  private final Solenoid solenoidCTRE = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+  private final XboxController controller = new XboxController(0);
+  private boolean buttonA = false;
+  private boolean buttonB = false;
 
   @Override
-  public void robotPeriodic() {
-  }
+  public void teleopPeriodic() {
+    buttonA = controller.getAButton();
+    buttonB = controller.getBButton();
 
-  @Override
-  public void disabledInit() {}
+    if (buttonA && !solenoidRev.get()) {
+      solenoidRev.set(true);
+    } else if (!buttonA && solenoidRev.get()) {
+      solenoidRev.set(false);
+    }
 
-  @Override
-  public void disabledPeriodic() {}
+    if (buttonB && !solenoidCTRE.get()) {
+      solenoidCTRE.set(true);
+    } else if (!buttonB && solenoidCTRE.get()) {
+      solenoidCTRE.set(false);
+    }
 
-  @Override
-  public void disabledExit() {}
-
-  @Override
-  public void autonomousInit() {
-
-  }
-
-  @Override
-  public void autonomousPeriodic() {}
-
-  @Override
-  public void autonomousExit() {}
-
-  @Override
-  public void teleopInit() {
+    SmartDashboard.putBoolean("Rev Solenoid", solenoidRev.get());
 
   }
 
   @Override
-  public void teleopPeriodic() {}
-
-  @Override
-  public void teleopExit() {}
-
-  @Override
-  public void testInit() {
+  public void teleopExit() {
+    solenoidCTRE.set(false);
+    solenoidRev.set(false);
   }
 
-  @Override
-  public void testPeriodic() {}
-
-  @Override
-  public void testExit() {}
 }
