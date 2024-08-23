@@ -23,21 +23,12 @@ public class Robot extends TimedRobot {
     buttonA = controller.getAButton();
     buttonB = controller.getBButton();
 
-    if (buttonA && !solenoidRev.get()) {
-      solenoidRev.set(true);
-    } else if (!buttonA && solenoidRev.get()) {
-      solenoidRev.set(false);
-    }
-
-    if (buttonB && !solenoidCTRE.get()) {
-      solenoidCTRE.set(true);
-    } else if (!buttonB && solenoidCTRE.get()) {
-      solenoidCTRE.set(false);
-    }
-
-    SmartDashboard.putBoolean("Rev Solenoid", solenoidRev.get());
+    SolenoidUtils.setSolenoid(buttonA, solenoidRev, true);
+    SolenoidUtils.setSolenoid(buttonB, solenoidCTRE, false);
 
   }
+
+
 
   @Override
   public void teleopExit() {
