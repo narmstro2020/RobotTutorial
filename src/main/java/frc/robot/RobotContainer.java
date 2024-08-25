@@ -22,7 +22,6 @@ public class RobotContainer {
   private final AirCannonSubsystem airCannonSubsystem0 = new RevAirCannonSubsystem(0, pneumaticHub);
   private final AirCannonSubsystem airCannonSubsystem1 = new CtreAirCannonSubsystem(1, pneumaticsControlModule);
 
-
   public RobotContainer() {
     SmartDashboard.putData(pneumaticHub.makeCompressor());
     SmartDashboard.putData(pneumaticsControlModule.makeCompressor());
@@ -36,6 +35,13 @@ public class RobotContainer {
     controller.a().onFalse(airCannonSubsystem0.closeAirCommand());
     controller.b().onTrue(airCannonSubsystem1.fireCommand());
     controller.b().onFalse(airCannonSubsystem1.closeAirCommand());
+    controller.x().onTrue(
+        airCannonSubsystem0.fireCommand()
+            .alongWith(airCannonSubsystem1.fireCommand()));
+    controller.x().onFalse(
+        Commands.parallel(
+            airCannonSubsystem0.closeAirCommand(),
+            airCannonSubsystem1.closeAirCommand()).withName("Close Both"));
   }
 
   public Command getAutonomousCommand() {
