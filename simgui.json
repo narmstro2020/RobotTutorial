@@ -13,7 +13,9 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/AirCannon0": "Subsystem",
       "/SmartDashboard/AirCannon1": "Subsystem",
-      "/SmartDashboard/AirCannonSubsystem": "Subsystem"
+      "/SmartDashboard/AirCannonSubsystem": "Subsystem",
+      "/SmartDashboard/CTRE Air Cannon 1": "Subsystem",
+      "/SmartDashboard/REV Air Cannon 0": "Subsystem"
     }
   },
   "NetworkTables": {
@@ -31,7 +33,10 @@
         "AirCannonSubsystem": {
           "open": true
         },
-        "Compressor[1]": {
+        "CTRE Air Cannon 1": {
+          "open": true
+        },
+        "REV Air Cannon 0": {
           "open": true
         },
         "Solenoid[1,0]": {

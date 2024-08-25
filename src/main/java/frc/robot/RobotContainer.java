@@ -5,24 +5,29 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsytems.AirCannonSubsystem;
+import frc.robot.subsytems.aircannons.AirCannonSubsystem;
+import frc.robot.subsytems.aircannons.CtreAirCannonSubsystem;
+import frc.robot.subsytems.aircannons.RevAirCannonSubsystem;
 
 public class RobotContainer {
 
   private final CommandXboxController controller = new CommandXboxController(0);
   private PneumaticHub pneumaticHub = new PneumaticHub();
-  private final AirCannonSubsystem airCannonSubsystem0 = new AirCannonSubsystem(0, pneumaticHub);
-  private final AirCannonSubsystem airCannonSubsystem1 = new AirCannonSubsystem(1, pneumaticHub);
+  private PneumaticsControlModule pneumaticsControlModule = new PneumaticsControlModule();
+  private final AirCannonSubsystem airCannonSubsystem0 = new RevAirCannonSubsystem(0, pneumaticHub);
+  private final AirCannonSubsystem airCannonSubsystem1 = new CtreAirCannonSubsystem(1, pneumaticsControlModule);
+
 
   public RobotContainer() {
     SmartDashboard.putData(pneumaticHub.makeCompressor());
+    SmartDashboard.putData(pneumaticsControlModule.makeCompressor());
     SmartDashboard.putData(airCannonSubsystem0);
     SmartDashboard.putData(airCannonSubsystem1);
-
     configureBindings();
   }
 

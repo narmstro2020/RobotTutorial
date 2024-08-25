@@ -2,34 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsytems;
+package frc.robot.subsytems.aircannons;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class AirCannonSubsystem extends SubsystemBase {
+public abstract class AirCannonSubsystem extends SubsystemBase {
 
-  private final Solenoid solenoidRev;
+  private final Solenoid solenoid;
 
   /** Creates a new AirCannonSubsystem. */
-  public AirCannonSubsystem(int channel, PneumaticHub pneumaticHub) {
-    solenoidRev = pneumaticHub.makeSolenoid(channel);
-    setName("AirCannon" + channel);
+  AirCannonSubsystem(Solenoid solenoid) {
+    this.solenoid = solenoid;
   }
 
   public boolean isSolenoidOn() {
-    return solenoidRev.get();
+    return solenoid.get();
   }
 
   public Command fireCommand() {
-    return runOnce(() -> solenoidRev.set(true));
+    return runOnce(() -> solenoid.set(true));
   }
 
   public Command closeAirCommand() {
-    return runOnce(() -> solenoidRev.set(false));
+    return runOnce(() -> solenoid.set(false));
   }
 
   @Override
@@ -42,7 +40,7 @@ public class AirCannonSubsystem extends SubsystemBase {
     super.initSendable(builder);
     builder.addBooleanProperty(
         "Valve Open",
-        solenoidRev::get,
+        solenoid::get,
         null);
   }
 
