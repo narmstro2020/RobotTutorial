@@ -10,7 +10,10 @@
   },
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/AirCannon0": "Subsystem",
+      "/SmartDashboard/AirCannon1": "Subsystem",
+      "/SmartDashboard/AirCannonSubsystem": "Subsystem"
     }
   },
   "NetworkTables": {
@@ -19,6 +22,15 @@
         "open": true
       },
       "SmartDashboard": {
+        "AirCannon0": {
+          "open": true
+        },
+        "AirCannon1": {
+          "open": true
+        },
+        "AirCannonSubsystem": {
+          "open": true
+        },
         "Compressor[1]": {
           "open": true
         },

@@ -4,37 +4,33 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsytems.AirCannonSubsystem;
 
 public class RobotContainer {
 
-  private final PneumaticHub pneumaticHub = new PneumaticHub();
-  private final Compressor pneumaticHubCompressor = pneumaticHub.makeCompressor();
-  private final Solenoid solenoidRev = pneumaticHub.makeSolenoid(0);
-  private final Solenoid solenoidCTRE = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
   private final CommandXboxController controller = new CommandXboxController(0);
+  private PneumaticHub pneumaticHub = new PneumaticHub();
+  private final AirCannonSubsystem airCannonSubsystem0 = new AirCannonSubsystem(0, pneumaticHub);
+  private final AirCannonSubsystem airCannonSubsystem1 = new AirCannonSubsystem(1, pneumaticHub);
 
   public RobotContainer() {
-    pneumaticHub.enableCompressorDigital();
-    SmartDashboard.putData(solenoidRev);
-    SmartDashboard.putData(pneumaticHubCompressor);
+    SmartDashboard.putData(pneumaticHub.makeCompressor());
+    SmartDashboard.putData(airCannonSubsystem0);
+    SmartDashboard.putData(airCannonSubsystem1);
+
     configureBindings();
   }
 
   private void configureBindings() {
-    controller.a().onTrue(Commands.runOnce(() -> solenoidRev.set(true)));
-    // Try this for the onFalse
-
-    // leave the ctre solenoid as an exercise for you
-    // use the b button.
-
+    controller.a().onTrue(airCannonSubsystem0.fireCommand());
+    controller.a().onFalse(airCannonSubsystem0.closeAirCommand());
+    controller.b().onTrue(airCannonSubsystem1.fireCommand());
+    controller.b().onFalse(airCannonSubsystem1.closeAirCommand());
   }
 
   public Command getAutonomousCommand() {
