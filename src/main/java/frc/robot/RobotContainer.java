@@ -30,13 +30,8 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    Trigger aTrigger = controller.a();
-    Runnable revOnAction = () -> solenoidRev.set(true);  
-    Command revOnCommand = Commands.runOnce(revOnAction);
-    Runnable revOffAction = () -> solenoidRev.set(false);
-    Command revOffCommand = Commands.runOnce(revOffAction);
-    aTrigger.onTrue(revOnCommand);
-    aTrigger.onFalse(revOffCommand);
+    controller.a().onTrue(Commands.runOnce(() -> solenoidRev.set(true)));
+    // Try this for the onFalse
 
     // leave the ctre solenoid as an exercise for you
     // use the b button.
